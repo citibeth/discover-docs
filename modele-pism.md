@@ -81,6 +81,7 @@ Now clone the software you need:
    git clone git@github.com:citibeth/icebin.git
    git clone git@github.com:pism/pism.git -b efischer/dev
    git clone <username>@simplex.giss.nasa.gov:/giss/gitrepo/modelE.git -b e3/twoway
+   pushd modelE; ln -s ../modele-setup.py .; popd
 
 .. note::
 
@@ -110,4 +111,58 @@ To clean a build:
 In the future, if you edit any of these packages, you will need to
 rebuild them.  If you edit header files in *ibmisc*, you will also
 need to rebuild *icebin*.
+
+Set up your SLURM Configuration
+```````````````````````````````
+
+Add to *.bashrc*:
+
+```
+export ECTL_LAUNCHER=slurm
+#export ECTL_LAUNCHER=slurm-debug
+#export ECTL_LAUNCHER=mpi
+
+# Used with runE for 
+
+# SLURM General QoS
+export QSUB_STRING="sbatch -A s1001 -n %np -t %t "
+# SLURM Debug QoS
+# export QSUB_STRING="sbatch --qos=debug -A s1001 -n %np -t %t "
+```
+
+Run ModelE Standalone
+`````````````````````
+
+Now you are ready to run ModelE, as explained in
+https://modele-control.readthedocs.io/en/latest/.  Start by creating a *project directory*:
+
+.. code-block:: sh
+
+   mkdir -p ~/exp/myproject
+   cd ~/exp/myproject
+   echo >~/exp/ectl.conf   # Marks this as a project directory
+
+Now you can run multiple different variations of the model (*runs*) within the project:
+
+.. code-block:: sh
+
+   ectl setup --src ~/git/twoway-discover/modelE --rundeck ~/git/twoway-discover/modelE/templates/E6F40.R run1
+
+In the future you can do either of:
+
+.. code-block:: sh
+
+   ectl setup run1
+   cd run1; ectl setup .
+
+Now you can run this:
+
+.. code-block:: sh
+
+   ectl run --help
+   ectl run -ts 19491231,19500201
+
+Now you can run it:
+
+   ectl run -ts 19491231,19500102 -np 28 --time 11:00:00 --launcher slurm-debug run1
 
