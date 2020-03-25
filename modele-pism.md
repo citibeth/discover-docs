@@ -79,6 +79,7 @@ Now clone the software you need:
 
    git clone git@github.com:citibeth/ibmisc.git
    git clone git@github.com:citibeth/icebin.git
+   git clone git@github.com:citibeth/twoway.git
    git clone git@github.com:pism/pism.git -b efischer/dev
    git clone <username>@simplex.giss.nasa.gov:/giss/gitrepo/modelE.git -b e3/twoway
    pushd modelE; ln -s ../modele-setup.py .; popd
@@ -133,8 +134,7 @@ export QSUB_STRING="sbatch -A s1001 -n %np -t %t "
 Run ModelE Standalone
 `````````````````````
 
-Now you are ready to run ModelE, as explained in
-https://modele-control.readthedocs.io/en/latest/.  Start by creating a *project directory*:
+Now you are ready to run ModelE, as explained in `modele-control docs <https://modele-control.readthedocs.io/en/latest/>`_.  Start by creating a *project directory*:
 
 .. code-block:: sh
 
